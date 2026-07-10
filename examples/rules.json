@@ -1,0 +1,40 @@
+{
+  "rules": [
+    {
+      "name": "Sort images into sorted/images",
+      "match": { "category": "image" },
+      "actions": [{ "type": "move", "dest": "./sorted/images" }]
+    },
+    {
+      "name": "Sort documents by year",
+      "match": { "category": "document" },
+      "actions": [{ "type": "move", "dest": "./sorted/documents/{year}" }]
+    },
+    {
+      "name": "Sort videos and audio into media",
+      "match": { "category": ["video", "audio"] },
+      "actions": [{ "type": "move", "dest": "./sorted/media/{category}" }]
+    },
+    {
+      "name": "Archive old logs (older than 30 days)",
+      "match": { "ext": ".log", "older_than_days": 30 },
+      "actions": [{ "type": "move", "dest": "./archive/logs" }]
+    },
+    {
+      "name": "Flag very large files (over 500 MB)",
+      "match": { "min_size": "500MB" },
+      "actions": [{ "type": "log", "message": "large file: {name} ({size} bytes)" }]
+    },
+    {
+      "name": "Tag screenshots by renaming",
+      "match": { "name_glob": ["Screenshot*", "Screen Shot*"], "category": "image" },
+      "actions": [{ "type": "rename", "template": "screenshot_{year}{month}{day}_{stem}.{ext}" }]
+    },
+    {
+      "name": "Delete zero-byte temp files (disabled by default)",
+      "enabled": false,
+      "match": { "ext": [".tmp", ".temp"], "max_size": 0 },
+      "actions": [{ "type": "delete" }]
+    }
+  ]
+}
