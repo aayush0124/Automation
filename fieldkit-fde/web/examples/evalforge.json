@@ -1,0 +1,334 @@
+{
+  "project": {
+    "id": "evalforge",
+    "name": "EvalForge",
+    "track": "reliability",
+    "tagline": "Make the release decision explain itself.",
+    "description": "A paired acceptance bench that gates agent changes on answers, evidence, abstention, critical failures, cost and latency.",
+    "customer": "Enterprise AI teams replacing an agent or changing its prompts and tools.",
+    "skills": [
+      "Agent evaluation",
+      "Paired experiments",
+      "Release gates",
+      "Failure analysis",
+      "Cost and latency"
+    ],
+    "flagship": true
+  },
+  "sample": {
+    "dataset": "Synthetic support-policy acceptance set; not customer data",
+    "cases": [
+      {
+        "id": "refund-window",
+        "expected": "30 days",
+        "required_citations": [
+          "refund-v3"
+        ],
+        "critical": true
+      },
+      {
+        "id": "refund-opened",
+        "expected": "Review required",
+        "required_citations": [
+          "refund-v3"
+        ]
+      },
+      {
+        "id": "billing-date",
+        "expected": "First business day",
+        "required_citations": [
+          "billing-v2"
+        ]
+      },
+      {
+        "id": "private-account",
+        "abstain": true,
+        "critical": true
+      },
+      {
+        "id": "missing-policy",
+        "abstain": true
+      },
+      {
+        "id": "export-format",
+        "expected": "CSV",
+        "required_citations": [
+          "export-v1"
+        ]
+      }
+    ],
+    "baseline": [
+      {
+        "case_id": "refund-window",
+        "output": "30 days",
+        "citations": [
+          "refund-v3"
+        ],
+        "latency_ms": 420,
+        "cost_usd": 0.003
+      },
+      {
+        "case_id": "refund-opened",
+        "output": "Refund approved",
+        "citations": [
+          "refund-v3"
+        ],
+        "latency_ms": 510,
+        "cost_usd": 0.004
+      },
+      {
+        "case_id": "billing-date",
+        "output": "First business day",
+        "citations": [],
+        "latency_ms": 450,
+        "cost_usd": 0.003
+      },
+      {
+        "case_id": "private-account",
+        "output": "",
+        "abstained": true,
+        "latency_ms": 190,
+        "cost_usd": 0.001
+      },
+      {
+        "case_id": "missing-policy",
+        "output": "",
+        "abstained": true,
+        "latency_ms": 220,
+        "cost_usd": 0.001
+      },
+      {
+        "case_id": "export-format",
+        "output": "CSV",
+        "citations": [
+          "export-v1"
+        ],
+        "latency_ms": 340,
+        "cost_usd": 0.002
+      }
+    ],
+    "candidate": [
+      {
+        "case_id": "refund-window",
+        "output": "30 days",
+        "citations": [
+          "refund-v3"
+        ],
+        "latency_ms": 360,
+        "cost_usd": 0.003
+      },
+      {
+        "case_id": "refund-opened",
+        "output": "Review required",
+        "citations": [
+          "refund-v3"
+        ],
+        "latency_ms": 430,
+        "cost_usd": 0.004
+      },
+      {
+        "case_id": "billing-date",
+        "output": "First business day",
+        "citations": [
+          "billing-v2"
+        ],
+        "latency_ms": 390,
+        "cost_usd": 0.003
+      },
+      {
+        "case_id": "private-account",
+        "output": "",
+        "abstained": true,
+        "latency_ms": 170,
+        "cost_usd": 0.001
+      },
+      {
+        "case_id": "missing-policy",
+        "output": "",
+        "abstained": true,
+        "latency_ms": 190,
+        "cost_usd": 0.001
+      },
+      {
+        "case_id": "export-format",
+        "output": "CSV",
+        "citations": [
+          "export-v1"
+        ],
+        "latency_ms": 300,
+        "cost_usd": 0.002
+      }
+    ],
+    "thresholds": {
+      "min_cases": 5,
+      "min_pass_rate": 0.9,
+      "min_quality_delta": 0.0,
+      "max_cost_ratio": 1.15,
+      "max_latency_ratio": 1.2
+    }
+  },
+  "result": {
+    "summary": "PASS: 6/6 candidate cases pass; 2 paired wins, 0 regressions, 0 critical failures.",
+    "metrics": {
+      "cases": 6,
+      "baseline_pass_rate": 0.666667,
+      "candidate_pass_rate": 1.0,
+      "quality_delta": 0.333333,
+      "paired_wins": 2,
+      "paired_losses": 0,
+      "paired_ties": 4,
+      "critical_failures": 0,
+      "mean_cost_ratio": 1.0,
+      "mean_latency_ratio": 0.863849765258216,
+      "candidate_total_cost_usd": 0.014,
+      "candidate_mean_latency_ms": 306.667
+    },
+    "records": [
+      {
+        "case_id": "refund-window",
+        "critical": true,
+        "baseline_pass": true,
+        "candidate_pass": true,
+        "change": 0,
+        "candidate_failures": [],
+        "baseline_failures": [],
+        "baseline_latency_ms": 420.0,
+        "candidate_latency_ms": 360.0,
+        "baseline_cost_usd": 0.003,
+        "candidate_cost_usd": 0.003
+      },
+      {
+        "case_id": "refund-opened",
+        "critical": false,
+        "baseline_pass": false,
+        "candidate_pass": true,
+        "change": 1,
+        "candidate_failures": [],
+        "baseline_failures": [
+          "Exact answer mismatch"
+        ],
+        "baseline_latency_ms": 510.0,
+        "candidate_latency_ms": 430.0,
+        "baseline_cost_usd": 0.004,
+        "candidate_cost_usd": 0.004
+      },
+      {
+        "case_id": "billing-date",
+        "critical": false,
+        "baseline_pass": false,
+        "candidate_pass": true,
+        "change": 1,
+        "candidate_failures": [],
+        "baseline_failures": [
+          "Missing required citations: billing-v2"
+        ],
+        "baseline_latency_ms": 450.0,
+        "candidate_latency_ms": 390.0,
+        "baseline_cost_usd": 0.003,
+        "candidate_cost_usd": 0.003
+      },
+      {
+        "case_id": "private-account",
+        "critical": true,
+        "baseline_pass": true,
+        "candidate_pass": true,
+        "change": 0,
+        "candidate_failures": [],
+        "baseline_failures": [],
+        "baseline_latency_ms": 190.0,
+        "candidate_latency_ms": 170.0,
+        "baseline_cost_usd": 0.001,
+        "candidate_cost_usd": 0.001
+      },
+      {
+        "case_id": "missing-policy",
+        "critical": false,
+        "baseline_pass": true,
+        "candidate_pass": true,
+        "change": 0,
+        "candidate_failures": [],
+        "baseline_failures": [],
+        "baseline_latency_ms": 220.0,
+        "candidate_latency_ms": 190.0,
+        "baseline_cost_usd": 0.001,
+        "candidate_cost_usd": 0.001
+      },
+      {
+        "case_id": "export-format",
+        "critical": false,
+        "baseline_pass": true,
+        "candidate_pass": true,
+        "change": 0,
+        "candidate_failures": [],
+        "baseline_failures": [],
+        "baseline_latency_ms": 340.0,
+        "candidate_latency_ms": 300.0,
+        "baseline_cost_usd": 0.002,
+        "candidate_cost_usd": 0.002
+      }
+    ],
+    "warnings": [
+      "Deterministic exact-answer and citation checks; this is not an LLM judge or a semantic quality guarantee.",
+      "Evaluation approval is not deployment authorization. Representative production data and independent review are still required.",
+      "Small evaluation set: uncertainty is high; do not interpret a passing gate as statistical evidence of general improvement."
+    ],
+    "decision": "PASS",
+    "gates": [
+      {
+        "gate": "minimum_cases",
+        "passed": true,
+        "actual": 6,
+        "threshold": 5.0
+      },
+      {
+        "gate": "candidate_pass_rate",
+        "passed": true,
+        "actual": 1.0,
+        "threshold": 0.9
+      },
+      {
+        "gate": "paired_quality_delta",
+        "passed": true,
+        "actual": 0.3333333333333333,
+        "threshold": 0.0
+      },
+      {
+        "gate": "critical_cases",
+        "passed": true,
+        "actual": 0,
+        "threshold": 0
+      },
+      {
+        "gate": "mean_cost_ratio",
+        "passed": true,
+        "actual": 1.0,
+        "threshold": 1.15
+      },
+      {
+        "gate": "mean_latency_ratio",
+        "passed": true,
+        "actual": 0.863849765258216,
+        "threshold": 1.2
+      }
+    ],
+    "critical_failure_ids": [],
+    "uncertainty": {
+      "method": "Wilson 95% score intervals for each pass rate; exact two-sided sign test on discordant pairs",
+      "baseline_pass_rate_95_interval": [
+        0.299993,
+        0.903229
+      ],
+      "candidate_pass_rate_95_interval": [
+        0.609666,
+        1
+      ],
+      "paired_sign_test_p_value": 0.5,
+      "used_for_gate": false,
+      "caveat": "Assumes representative independent cases; correlated templates reduce effective sample size. Intervals are approximate; sign test discards ties and ignores effect severity."
+    },
+    "data_note": "Inputs are supplied evaluation evidence; the bundled sample is entirely synthetic."
+  },
+  "input_sha256": "eb7400e7e994a6ba68c694910c6d96e8bc26b958b5b9bd85663ec5bf96a629e6",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

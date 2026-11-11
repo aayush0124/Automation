@@ -1,0 +1,101 @@
+{
+  "project": {
+    "id": "consentline",
+    "name": "ConsentLine",
+    "track": "enterprise",
+    "tagline": "Give a workflow the minimum data it is allowed to use.",
+    "description": "Purpose-bound redaction, keyed pseudonyms, span-level evidence and a fail-closed egress decision for synthetic support text.",
+    "customer": "A support platform sharing ticket excerpts with an external analysis vendor",
+    "skills": [
+      "data minimization",
+      "policy enforcement",
+      "HMAC pseudonyms",
+      "audit trails",
+      "failure handling"
+    ],
+    "flagship": false
+  },
+  "sample": {
+    "text": "Synthetic ticket: reply to mira@example.test or +91 98765 43210. PAN-like identifier ABCDE1234F was pasted by mistake. Repeated contact: mira@example.test.",
+    "purpose": "support_summary",
+    "consent": {
+      "granted": true,
+      "purposes": [
+        "support_summary"
+      ],
+      "data_classes": []
+    },
+    "keep_classes": [],
+    "mode": "pseudonymize",
+    "pseudonym_key": "synthetic-public-demo-key-not-for-production"
+  },
+  "result": {
+    "summary": "Allow egress for support_summary; 4 detected entities, 4 minimized.",
+    "metrics": {
+      "detected_entities": 4,
+      "minimized_entities": 4,
+      "retained_entities": 0,
+      "egress_allowed": true
+    },
+    "records": [
+      {
+        "entity": 1,
+        "start": 27,
+        "end": 44,
+        "data_class": "email",
+        "action": "pseudonymize",
+        "replacement": "[EMAIL_fba30c2964f22a93b810]",
+        "rule": "support_summary/email"
+      },
+      {
+        "entity": 2,
+        "start": 48,
+        "end": 63,
+        "data_class": "phone",
+        "action": "pseudonymize",
+        "replacement": "[PHONE_c79305c94b4d0f3b046a]",
+        "rule": "support_summary/phone"
+      },
+      {
+        "entity": 3,
+        "start": 85,
+        "end": 95,
+        "data_class": "pan",
+        "action": "pseudonymize",
+        "replacement": "[PAN_a622e43d8a9afd6ea1f5]",
+        "rule": "support_summary/pan"
+      },
+      {
+        "entity": 4,
+        "start": 137,
+        "end": 154,
+        "data_class": "email",
+        "action": "pseudonymize",
+        "replacement": "[EMAIL_fba30c2964f22a93b810]",
+        "rule": "support_summary/email"
+      }
+    ],
+    "warnings": [
+      "Synthetic demonstration: regex detectors cover only email, phone-like and PAN-like strings; names, addresses and other sensitive content may remain.",
+      "Consent is supplied test data, not authenticated evidence or a legal compliance determination.",
+      "Pseudonyms remain linkable within this purpose and key; protect keys and apply a retention policy."
+    ],
+    "egress": {
+      "decision": "allow",
+      "reasons": [],
+      "text": "Synthetic ticket: reply to [EMAIL_fba30c2964f22a93b810] or [PHONE_c79305c94b4d0f3b046a]. PAN-like identifier [PAN_a622e43d8a9afd6ea1f5] was pasted by mistake. Repeated contact: [EMAIL_fba30c2964f22a93b810]."
+    },
+    "policy": {
+      "version": "demo-v1",
+      "purpose": "support_summary",
+      "allowed_raw_classes": [],
+      "requested_raw_classes": [],
+      "consented_raw_classes": []
+    },
+    "offset_units": "Python Unicode code points in original text; end is exclusive",
+    "executed_external_actions": 0
+  },
+  "input_sha256": "c45bacb91e5fb6c675a996633a0d4332944c5f349c1320d8d9ccf74e401a2877",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

@@ -1,0 +1,9 @@
+[project]
+name = "fieldkit-fde"
+version = "0.1.0"
+description = "Ten executable customer-workflow projects for forward deployed engineering"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.ruff]
+line-length = 110

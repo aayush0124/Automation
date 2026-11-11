@@ -1,0 +1,198 @@
+{
+  "verified_at": "2026-11-11T06:09:47.337837+00:00",
+  "python": "3.14.5",
+  "platform": "Windows",
+  "tests_run": 158,
+  "failures": 0,
+  "errors": 0,
+  "skipped": [
+    {
+      "test": "test_audit_survives_actual_server_restart (test_runtime.RuntimeBoundaryTests.test_audit_survives_actual_server_restart)",
+      "reason": "Environment disallows loopback socket connections: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions"
+    },
+    {
+      "test": "setUpClass (test_runtime.RuntimeHTTPTests)",
+      "reason": "Environment disallows loopback socket connections: [WinError 10013] An attempt was made to access a socket in a way forbidden by its access permissions"
+    }
+  ],
+  "suite_success": true,
+  "projects": [
+    {
+      "id": "dockyard",
+      "input_sha256": "8a7555ab04e5da9a94b54559ffa5e206784cd764291a549639884c9578f1b9ef",
+      "deterministic": true,
+      "metrics": {
+        "input_rows": 6,
+        "clean_customers": 2,
+        "accepted_source_rows": 3,
+        "quarantined_rows": 3,
+        "duplicates_collapsed": 1,
+        "accepted_row_percent": 50.0
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "proofdesk",
+      "input_sha256": "d74ca2a923e8898b2a4fe7c8d2a58abab99efcde2036ed610af28fbcd93a5f70",
+      "deterministic": true,
+      "metrics": {
+        "returned_citations": 1,
+        "query_terms": 3,
+        "abstained": false
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "evalforge",
+      "input_sha256": "eb7400e7e994a6ba68c694910c6d96e8bc26b958b5b9bd85663ec5bf96a629e6",
+      "deterministic": true,
+      "metrics": {
+        "cases": 6,
+        "baseline_pass_rate": 0.666667,
+        "candidate_pass_rate": 1.0,
+        "quality_delta": 0.333333,
+        "paired_wins": 2,
+        "paired_losses": 0,
+        "paired_ties": 4,
+        "critical_failures": 0,
+        "mean_cost_ratio": 1.0,
+        "mean_latency_ratio": 0.863849765258216,
+        "candidate_total_cost_usd": 0.014,
+        "candidate_mean_latency_ms": 306.667
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "ledgerguard",
+      "input_sha256": "13e691c029f5cd36aa4b7d6379e17ef18460e5d8045e9b639f50a56522591ec5",
+      "deterministic": true,
+      "metrics": {
+        "invoices": 4,
+        "matched": 1,
+        "held": 3
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "relay",
+      "input_sha256": "960ad4955c1d8ddd0ebbd090b98d794e63ba6a21cca2cd573346d16ed90e02d8",
+      "deterministic": true,
+      "metrics": {
+        "received": 5,
+        "unique_events": 4,
+        "duplicates": 1,
+        "conflicts": 0,
+        "delivered": 3,
+        "dead_letters": 1,
+        "pending": 0,
+        "delivery_attempts": 7
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "switchboard",
+      "input_sha256": "9e0400d5f187293e4e8fefbbcdbfe2e18f7d95b0ab135cba36a715fbd000deb6",
+      "deterministic": true,
+      "metrics": {
+        "services": 6,
+        "alerting_services": 4,
+        "cycle_edges": 0,
+        "recent_deployments": 1
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "routecraft",
+      "input_sha256": "e63898590c3d4ca0fbf0d3dfcb5f1ddd245e4d6f2f4dbb1474f4bf9f309a1b9b",
+      "deterministic": true,
+      "metrics": {
+        "assigned_jobs": 4,
+        "unassigned_jobs": 2,
+        "distance_units": 53.826,
+        "baseline_assigned_jobs": 4,
+        "baseline_distance_units": 41.635
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "consentline",
+      "input_sha256": "c45bacb91e5fb6c675a996633a0d4332944c5f349c1320d8d9ccf74e401a2877",
+      "deterministic": true,
+      "metrics": {
+        "detected_entities": 4,
+        "minimized_entities": 4,
+        "retained_entities": 0,
+        "egress_allowed": true
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "shiftforge",
+      "input_sha256": "96542d8175e23f2e4c9e5b71c5b9b852a30643f270bf79bcd8ef043c4ea86fc1",
+      "deterministic": true,
+      "metrics": {
+        "scheduled_jobs": 6,
+        "unscheduled_jobs": 1,
+        "late_jobs": 3,
+        "total_lateness_minutes": 55.0,
+        "makespan_minutes": 195.0
+      },
+      "static_export_matches": true
+    },
+    {
+      "id": "launchgate",
+      "input_sha256": "2528f44cd9400cf0f785fe95cb610e538fc62338efce0f731524aa1b64a7ebed",
+      "deterministic": true,
+      "metrics": {
+        "decision": "rollback",
+        "passed_checks": 4,
+        "failed_checks": 3,
+        "held_checks": 0,
+        "canary_requests": 400,
+        "canary_burn_rate": 3.4999999999999973,
+        "canary_p95_ms": 420.0
+      },
+      "static_export_matches": true
+    }
+  ],
+  "source_sha256": {
+    "fieldkit/__init__.py": "52badb191bc96fbdde19ad7e93b9e4f6e6b69d54b649e9939258c5f0c53c8646",
+    "fieldkit/__main__.py": "ae336966ae065cccdef36df81df20f28fd4d74ec35d2ce97459712c1907d3fbd",
+    "fieldkit/audit.py": "f034cf006ed38317de8feed77408e133405ca008208b045b1bc99145b989c71e",
+    "fieldkit/export.py": "32e8a032eb52dab4013f28cd691ff787e497a658a5cee151550ba3a8ad8000ed",
+    "fieldkit/mcp.py": "e5c02c1467aaeaca863fa990e4ad3a60f5ac03bcc6af8c551631c8b1c5c7a61f",
+    "fieldkit/projects/__init__.py": "51a66b2a5406254693170675151719e8c8d5910b41d3a6898dba0ee9d7d6ebcb",
+    "fieldkit/projects/consentline.py": "a97a30deb367b759dbaf399406956599291d9f12ec785005b930505741d5d395",
+    "fieldkit/projects/dockyard.py": "8eb5406be06ecd62f6f5b3f8bc7b09c594f9bb21567ee5a6d8b50c01c30ae709",
+    "fieldkit/projects/evalforge.py": "4c14bcbcd29f80f2863f4e724eb868be74ee6b854282be501b846462701242e6",
+    "fieldkit/projects/launchgate.py": "89cf2086f72562bdb3f78def82c8e84ced5f08f31056288449374d22b313dee7",
+    "fieldkit/projects/ledgerguard.py": "6da22a45ca00c819be4df328b03697955c6cfd591f75fee2bc74991bcf80b6dd",
+    "fieldkit/projects/proofdesk.py": "84036daf28bc3697a25cf4a68d95d79aec0fdd4a82debc6df2d986ad84428553",
+    "fieldkit/projects/relay.py": "d4d1ad3cbd99d7a93dfabc3859e270198b4fb63e4f8a37605e1ae2ae6147ff48",
+    "fieldkit/projects/routecraft.py": "9d4e7fd6a50abee49ec89265cd1cd94890b50156d4050a4f10624dccadbc83b5",
+    "fieldkit/projects/shiftforge.py": "aad667065b172ebd9a42746d4280e41f3cd36de1caae0a381d39b73f5be3ddf7",
+    "fieldkit/projects/switchboard.py": "761e43242fa5b0386b33caaa3a939227d1e0f16930ecfccec80a78df34fac0fb",
+    "fieldkit/registry.py": "61abcb98945a06f1d2d7f0e2cfc2d0666d38e1af54dff632c9dcd6f2fd6153e2",
+    "fieldkit/server.py": "60a6dca290011afaeb9101c97eeb0beb693315501de0952c5892b9199a5841ef",
+    "tests/test_adversarial.py": "8c19413ac809d628efb0d93aca4bfd096b12b53422a9683e2207b956c6d8dabd",
+    "tests/test_consentline.py": "9ac8ee2434d4a1d0b6afb9bf5ce481d6e4be742ee06821081172fdad2c0aa38e",
+    "tests/test_dockyard.py": "8fbae21549f4039592b9cbee1e03e80f6e4a968c6042e9f85e1d1ca0a95414f2",
+    "tests/test_evalforge.py": "dac578374e83282698a8c69b2e880615b13e7a41b179db21061a75622bdabf8c",
+    "tests/test_launchgate.py": "880f4a5f3919c1cf28d4be33b61d933d9296d69021eb91caa827874521b49b0a",
+    "tests/test_ledgerguard.py": "92cbb4464c4134b07bf465819b297d490e7cc4188b74cdf98b0553cd5e139967",
+    "tests/test_mcp.py": "142bdc2797b23f3bac617e0142b4de121517ec7bb2a2cdce3853239bf243489c",
+    "tests/test_proofdesk.py": "44af41ac215d43fe6c23090050cf9f5e3f0755eec7cc163fb7cb91f62f9a9a39",
+    "tests/test_relay.py": "25e37b97165ed0a045a6434c7141087424675989824083c587340221dd2d6c63",
+    "tests/test_routecraft.py": "b2e350529a3f51ccf1273c3dc53c1e9934762c521962c9df78c164d0b0e9de2f",
+    "tests/test_runtime.py": "dfe843eabf490365d525f7893ac3eb735db881974dfe7ecd81a3b679ba514728",
+    "tests/test_shiftforge.py": "a1a22896d4bfc851532ae5e49d1c4b08f691f716d2d6e42fdcf906db8851dc54",
+    "tests/test_switchboard.py": "8c18fe608d83c14cb6c482947752fa454a1e44f84982850fd948392e8a4cd1ae",
+    "web/app.js": "95fd0d797eb94e236cec90fde3272953ddb8bf8d04915fa5b20005fe7e764e77",
+    "web/index.html": "c4164593faf51c7f491314bc25e7332d878d6704e4bcece006fa2241bc6f8f10",
+    "web/style.css": "ccc19619e337dfe594ea5ee9a9ce4108170fe8e32ec29e63a3e212f275a09302"
+  },
+  "source_hash_format": "UTF-8 with LF newlines, matching repository normalization",
+  "scope": "Synthetic deterministic workflow and protocol verification; not customer outcomes or model evaluation",
+  "browser_visual_review": "Not completed: browser control stopped during URL verification",
+  "external_mcp_client_review": "Not completed; subprocess protocol tests are included"
+}

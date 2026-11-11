@@ -1,0 +1,202 @@
+{
+  "project": {
+    "id": "launchgate",
+    "name": "LaunchGate",
+    "track": "reliability",
+    "tagline": "A release decision that explains its evidence.",
+    "description": "An inspectable canary gate combining traffic sufficiency, SLO burn, latency and baseline regression.",
+    "customer": "A platform team deciding whether to expand, pause or roll back a customer-facing release.",
+    "skills": [
+      "SLOs",
+      "canary releases",
+      "error budgets",
+      "latency analysis",
+      "operational handoff"
+    ],
+    "flagship": false
+  },
+  "sample": {
+    "baseline": {
+      "requests": 1200,
+      "errors": 3,
+      "window_minutes": 10,
+      "latency_ms": [
+        95,
+        100,
+        110,
+        105,
+        115,
+        120,
+        100,
+        110,
+        130,
+        115,
+        105,
+        100,
+        120,
+        135,
+        110,
+        120,
+        115,
+        125,
+        140,
+        150
+      ]
+    },
+    "canary": {
+      "requests": 400,
+      "errors": 14,
+      "window_minutes": 10,
+      "latency_ms": [
+        100,
+        110,
+        130,
+        140,
+        150,
+        155,
+        160,
+        165,
+        170,
+        175,
+        180,
+        190,
+        210,
+        230,
+        250,
+        270,
+        300,
+        380,
+        420,
+        900
+      ]
+    },
+    "policy": {
+      "min_requests": 200,
+      "min_latency_samples": 20,
+      "success_slo": 0.99,
+      "max_burn_rate": 2.0,
+      "max_error_increase_pp": 1.0,
+      "max_p95_ms": 500,
+      "max_latency_ratio": 1.5,
+      "budget_period_days": 30
+    }
+  },
+  "result": {
+    "summary": "ROLLBACK: Measured thresholds were exceeded; recommend restoring the previous release.",
+    "metrics": {
+      "decision": "rollback",
+      "passed_checks": 4,
+      "failed_checks": 3,
+      "held_checks": 0,
+      "canary_requests": 400,
+      "canary_burn_rate": 3.4999999999999973,
+      "canary_p95_ms": 420.0
+    },
+    "records": [
+      {
+        "check": "Traffic sufficiency",
+        "outcome": "pass",
+        "observed": 400,
+        "threshold": 200,
+        "reason": "Both cohorts must meet the configured minimum request count."
+      },
+      {
+        "check": "Latency sample sufficiency",
+        "outcome": "pass",
+        "observed": 20,
+        "threshold": 20,
+        "reason": "Both cohorts need enough latency observations; missing samples cannot pass."
+      },
+      {
+        "check": "Comparable windows",
+        "outcome": "pass",
+        "observed": [
+          10.0,
+          10.0
+        ],
+        "threshold": "equal minutes",
+        "reason": "Unequal windows require re-aggregation before an automatic comparison."
+      },
+      {
+        "check": "Canary error-budget burn",
+        "outcome": "fail",
+        "observed": 3.5,
+        "threshold": 2.0,
+        "reason": "Observed error fraction divided by the allowed SLO error fraction."
+      },
+      {
+        "check": "Error regression (percentage points)",
+        "outcome": "fail",
+        "observed": 3.25,
+        "threshold": 1.0,
+        "reason": "Absolute canary-minus-baseline error-rate increase, in percentage points."
+      },
+      {
+        "check": "Canary p95 latency (ms)",
+        "outcome": "pass",
+        "observed": 420.0,
+        "threshold": 500.0,
+        "reason": "Nearest-rank p95 from supplied observations; not an extrapolated distribution."
+      },
+      {
+        "check": "p95 latency ratio",
+        "outcome": "fail",
+        "observed": 3.0,
+        "threshold": 1.5,
+        "reason": "Canary p95 divided by baseline p95; a zero baseline cannot form a meaningful ratio."
+      }
+    ],
+    "warnings": [
+      "Decision support only: no deployment or rollback is executed.",
+      "Synthetic fixture by default. This threshold gate does not establish statistical significance or causal impact.",
+      "Budget consumption is a constant-traffic projection from this window, not measured monthly budget remaining."
+    ],
+    "decision": "rollback",
+    "baseline": {
+      "requests": 1200,
+      "errors": 3,
+      "window_minutes": 10.0,
+      "latency_samples": 20,
+      "error_rate": 0.0025,
+      "error_rate_percent": 0.25,
+      "burn_rate": 0.24999999999999978,
+      "p50_ms": 115.0,
+      "p95_ms": 140.0,
+      "p99_ms": 150.0,
+      "projected_budget_consumption_percent": 0.005787
+    },
+    "canary": {
+      "requests": 400,
+      "errors": 14,
+      "window_minutes": 10.0,
+      "latency_samples": 20,
+      "error_rate": 0.035,
+      "error_rate_percent": 3.5,
+      "burn_rate": 3.4999999999999973,
+      "p50_ms": 175.0,
+      "p95_ms": 420.0,
+      "p99_ms": 900.0,
+      "projected_budget_consumption_percent": 0.081019
+    },
+    "policy": {
+      "min_requests": 200,
+      "min_latency_samples": 20,
+      "success_slo": 0.99,
+      "max_burn_rate": 2.0,
+      "max_error_increase_pp": 1.0,
+      "max_p95_ms": 500.0,
+      "max_latency_ratio": 1.5,
+      "budget_period_days": 30.0
+    },
+    "failures": [
+      "Canary error-budget burn",
+      "Error regression (percentage points)",
+      "p95 latency ratio"
+    ],
+    "holds": [],
+    "data_mode": "supplied counters and latency samples; default fixture is synthetic"
+  },
+  "input_sha256": "2528f44cd9400cf0f785fe95cb610e538fc62338efce0f731524aa1b64a7ebed",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

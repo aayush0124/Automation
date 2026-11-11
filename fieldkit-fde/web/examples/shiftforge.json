@@ -1,0 +1,279 @@
+{
+  "project": {
+    "id": "shiftforge",
+    "name": "ShiftForge",
+    "track": "operations",
+    "tagline": "Turn an overloaded order book into a feasible shift.",
+    "description": "Schedule dependent manufacturing jobs against machine skills, release times and maintenance windows.",
+    "customer": "A small manufacturer coordinating production and customer promises",
+    "skills": [
+      "DAG scheduling",
+      "Capacity planning",
+      "Explainability",
+      "Constraint validation"
+    ],
+    "flagship": false
+  },
+  "sample": {
+    "horizon_minutes": 240,
+    "machines": [
+      {
+        "id": "laser-1",
+        "skills": [
+          "cut"
+        ],
+        "available_from": 0,
+        "unavailable": [
+          {
+            "start": 60,
+            "end": 90
+          }
+        ]
+      },
+      {
+        "id": "mill-1",
+        "skills": [
+          "mill",
+          "drill"
+        ],
+        "available_from": 0
+      },
+      {
+        "id": "bench-1",
+        "skills": [
+          "assemble",
+          "inspect"
+        ],
+        "available_from": 15
+      }
+    ],
+    "jobs": [
+      {
+        "id": "A-cut",
+        "skill": "cut",
+        "duration_minutes": 45,
+        "due_minute": 60,
+        "depends_on": []
+      },
+      {
+        "id": "B-cut",
+        "skill": "cut",
+        "duration_minutes": 40,
+        "due_minute": 100,
+        "depends_on": []
+      },
+      {
+        "id": "A-mill",
+        "skill": "mill",
+        "duration_minutes": 55,
+        "due_minute": 115,
+        "depends_on": [
+          "A-cut"
+        ]
+      },
+      {
+        "id": "A-assemble",
+        "skill": "assemble",
+        "duration_minutes": 35,
+        "due_minute": 125,
+        "depends_on": [
+          "A-mill"
+        ]
+      },
+      {
+        "id": "B-drill",
+        "skill": "drill",
+        "duration_minutes": 45,
+        "due_minute": 160,
+        "depends_on": [
+          "B-cut"
+        ]
+      },
+      {
+        "id": "B-inspect",
+        "skill": "inspect",
+        "duration_minutes": 20,
+        "due_minute": 210,
+        "depends_on": [
+          "B-drill"
+        ]
+      },
+      {
+        "id": "C-coat",
+        "skill": "coat",
+        "duration_minutes": 30,
+        "due_minute": 180,
+        "depends_on": []
+      }
+    ]
+  },
+  "result": {
+    "summary": "Scheduled 6/7 jobs; 3 finish late and 1 need production-planner review.",
+    "metrics": {
+      "scheduled_jobs": 6,
+      "unscheduled_jobs": 1,
+      "late_jobs": 3,
+      "total_lateness_minutes": 55.0,
+      "makespan_minutes": 195.0
+    },
+    "records": [
+      {
+        "job": "A-cut",
+        "machine": "laser-1",
+        "skill": "cut",
+        "start_minute": 0.0,
+        "end_minute": 45.0,
+        "duration_minutes": 45.0,
+        "due_minute": 60.0,
+        "late_minutes": 0,
+        "depends_on": []
+      },
+      {
+        "job": "A-mill",
+        "machine": "mill-1",
+        "skill": "mill",
+        "start_minute": 45.0,
+        "end_minute": 100.0,
+        "duration_minutes": 55.0,
+        "due_minute": 115.0,
+        "late_minutes": 0,
+        "depends_on": [
+          "A-cut"
+        ]
+      },
+      {
+        "job": "B-cut",
+        "machine": "laser-1",
+        "skill": "cut",
+        "start_minute": 90.0,
+        "end_minute": 130.0,
+        "duration_minutes": 40.0,
+        "due_minute": 100.0,
+        "late_minutes": 30.0,
+        "depends_on": []
+      },
+      {
+        "job": "A-assemble",
+        "machine": "bench-1",
+        "skill": "assemble",
+        "start_minute": 100.0,
+        "end_minute": 135.0,
+        "duration_minutes": 35.0,
+        "due_minute": 125.0,
+        "late_minutes": 10.0,
+        "depends_on": [
+          "A-mill"
+        ]
+      },
+      {
+        "job": "B-drill",
+        "machine": "mill-1",
+        "skill": "drill",
+        "start_minute": 130.0,
+        "end_minute": 175.0,
+        "duration_minutes": 45.0,
+        "due_minute": 160.0,
+        "late_minutes": 15.0,
+        "depends_on": [
+          "B-cut"
+        ]
+      },
+      {
+        "job": "B-inspect",
+        "machine": "bench-1",
+        "skill": "inspect",
+        "start_minute": 175.0,
+        "end_minute": 195.0,
+        "duration_minutes": 20.0,
+        "due_minute": 210.0,
+        "late_minutes": 0,
+        "depends_on": [
+          "B-drill"
+        ]
+      }
+    ],
+    "warnings": [
+      "This deterministic earliest-due-date list scheduler produces a feasible plan, not an optimal schedule.",
+      "One job occupies one machine at a time. Setup, transport, labor pools and material availability are not modeled."
+    ],
+    "unscheduled": [
+      {
+        "job": "C-coat",
+        "reason": "missing_machine_skill",
+        "skill": "coat"
+      }
+    ],
+    "machines": [
+      {
+        "machine": "bench-1",
+        "scheduled_jobs": 2,
+        "busy_minutes": 55.0,
+        "available_minutes": 225.0,
+        "maintenance_minutes": 0,
+        "utilization_pct": 24.44,
+        "unavailable": []
+      },
+      {
+        "machine": "laser-1",
+        "scheduled_jobs": 2,
+        "busy_minutes": 85.0,
+        "available_minutes": 210.0,
+        "maintenance_minutes": 30.0,
+        "utilization_pct": 40.48,
+        "unavailable": [
+          {
+            "start": 60.0,
+            "end": 90.0
+          }
+        ]
+      },
+      {
+        "machine": "mill-1",
+        "scheduled_jobs": 2,
+        "busy_minutes": 100.0,
+        "available_minutes": 240.0,
+        "maintenance_minutes": 0,
+        "utilization_pct": 41.67,
+        "unavailable": []
+      }
+    ],
+    "bottleneck_candidates": [
+      {
+        "machine": "mill-1",
+        "scheduled_jobs": 2,
+        "busy_minutes": 100.0,
+        "available_minutes": 240.0,
+        "maintenance_minutes": 0,
+        "utilization_pct": 41.67,
+        "unavailable": []
+      },
+      {
+        "machine": "laser-1",
+        "scheduled_jobs": 2,
+        "busy_minutes": 85.0,
+        "available_minutes": 210.0,
+        "maintenance_minutes": 30.0,
+        "utilization_pct": 40.48,
+        "unavailable": [
+          {
+            "start": 60.0,
+            "end": 90.0
+          }
+        ]
+      },
+      {
+        "machine": "bench-1",
+        "scheduled_jobs": 2,
+        "busy_minutes": 55.0,
+        "available_minutes": 225.0,
+        "maintenance_minutes": 0,
+        "utilization_pct": 24.44,
+        "unavailable": []
+      }
+    ],
+    "horizon_minutes": 240.0
+  },
+  "input_sha256": "96542d8175e23f2e4c9e5b71c5b9b852a30643f270bf79bcd8ef043c4ea86fc1",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

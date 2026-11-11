@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151714">
+  <meta name="description" content="Fieldkit: ten runnable forward deployed engineering projects by Aayush Paliwal. Explore customer workflows, failure cases, and verifiable evidence.">
+  <title>FIELDKIT — Forward deployed engineering lab</title>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#workbench">Skip to the projects</a>
+  <header class="site-header shell">
+    <a class="wordmark" href="./" aria-label="Fieldkit home"><span class="brand-symbol" aria-hidden="true"><i></i><i></i><i></i><i></i></span>FIELDKIT<span class="wordmark-suffix">/ FDE LAB</span></a>
+    <nav class="header-nav" aria-label="Main navigation">
+      <a href="#workbench">The work</a>
+      <a href="https://github.com/aayush0124/Automation/tree/portfolio/fieldkit-fde/fieldkit-fde/docs" target="_blank" rel="noopener noreferrer">Field notes <span aria-hidden="true">↗</span></a>
+      <a class="repo-link" href="https://github.com/aayush0124/Automation/tree/portfolio/fieldkit-fde/fieldkit-fde" target="_blank" rel="noopener noreferrer">View source <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="small-cross" aria-hidden="true">✳</span> THE FORWARD DEPLOYED ENGINEERING LAB</p>
+        <h1 id="hero-title">Build for the<br>messy <em>real world.</em></h1>
+        <p class="hero-description">Ten customer problems. Working systems. Visible tradeoffs.<br class="desktop-break"> A portfolio of the engineering between a promising idea and a dependable workflow.</p>
+        <div class="hero-actions"><a class="primary-link" href="#workbench">Explore the work <span aria-hidden="true">↓</span></a><span class="byline">Built by <strong>Aayush Paliwal</strong></span></div>
+      </div>
+      <aside class="field-note" aria-label="Portfolio approach">
+        <div class="note-heading"><span>FIELD NOTE / 001</span><span class="note-cross" aria-hidden="true">+</span></div>
+        <p class="note-statement">The happy path<br>is only the beginning.</p>
+        <ul class="note-checks">
+          <li><span aria-hidden="true">01</span> Start with a customer constraint.</li>
+          <li><span aria-hidden="true">02</span> Make the workflow executable.</li>
+          <li><span aria-hidden="true">03</span> Show what happens when it fails.</li>
+          <li><span aria-hidden="true">04</span> Leave evidence someone can inspect.</li>
+        </ul>
+        <div class="note-footer"><span class="note-stamp">BUILD · TEST · EXPLAIN</span><span aria-hidden="true">↗</span></div>
+      </aside>
+    </section>
+
+    <div class="portfolio-strip shell" aria-label="Portfolio scope">
+      <div><strong id="project-count">10</strong><span>working demos</span></div>
+      <div><strong>03</strong><span>engineering tracks</span></div>
+      <p>Synthetic fixtures. Inspectable outputs.<br>No external actions or live customer data.</p>
+      <span class="mode-pill" id="mode-pill"><span class="status-dot" aria-hidden="true"></span><span id="mode-label">Connecting to lab</span></span>
+    </div>
+
+    <section class="workbench shell" id="workbench" aria-labelledby="workbench-title">
+      <div class="section-heading"><div><p class="eyebrow">PICK A PROBLEM. FOLLOW THE EVIDENCE.</p><h2 id="workbench-title">The working collection<span class="orange-dot">.</span></h2></div><span class="collection-label">COLLECTION 01 / ENGINEERING IN CONTEXT</span></div>
+      <div class="mode-banner" id="mode-banner" role="status" hidden></div>
+      <div class="catalog-tools">
+        <div class="track-tabs" role="tablist" aria-label="Engineering track">
+          <button type="button" role="tab" id="track-enterprise" aria-selected="true" aria-controls="project-list" tabindex="0" data-track="enterprise"><span class="track-number">01</span>Enterprise AI</button>
+          <button type="button" role="tab" id="track-operations" aria-selected="false" aria-controls="project-list" tabindex="-1" data-track="operations"><span class="track-number">02</span>Operational systems</button>
+          <button type="button" role="tab" id="track-reliability" aria-selected="false" aria-controls="project-list" tabindex="-1" data-track="reliability"><span class="track-number">03</span>Deployment reliability</button>
+        </div>
+        <label class="search-field"><span class="sr-only">Search all projects</span><span aria-hidden="true">⌕</span><input type="search" id="project-search" placeholder="Search all 10 projects" autocomplete="off"><span class="search-hint" aria-hidden="true">/</span></label>
+      </div>
+      <p id="search-context" class="search-context" hidden></p>
+      <div class="workspace-grid">
+        <div class="catalog-column">
+          <div class="project-list" id="project-list" role="tabpanel" aria-labelledby="track-enterprise" aria-live="polite"><p class="empty-state">Loading the collection…</p></div>
+          <p class="catalog-footnote">Every project includes a customer brief, a runnable core, failure cases, and a deployment backlog.</p>
+        </div>
+        <article class="project-detail" id="project-detail" aria-labelledby="detail-title" aria-busy="false">
+          <div class="detail-placeholder" id="detail-placeholder"><span class="placeholder-mark" aria-hidden="true">⌘</span><h3>Open a field kit</h3><p>Select a project to inspect its inputs, run the workflow, and trace the result.</p></div>
+          <div id="detail-content" hidden>
+            <div class="detail-topline"><span id="detail-track" class="eyebrow"></span><span class="detail-badge" id="detail-badge" hidden>FLAGSHIP</span></div>
+            <h3 id="detail-title"></h3>
+            <p id="detail-description" class="detail-description"></p>
+            <div class="customer-row"><span class="label">CUSTOMER</span><p id="detail-customer"></p></div>
+            <div id="detail-skills" class="skill-list" aria-label="Engineering capabilities"></div>
+            <a class="project-note-link" id="project-note-link" href="https://github.com/aayush0124/Automation/tree/portfolio/fieldkit-fde/fieldkit-fde/docs" target="_blank" rel="noopener noreferrer">Read the project brief & demo guide <span aria-hidden="true">↗</span></a>
+
+            <div class="runbook-divider"><span>01 / INPUT</span><span id="input-mode">EDITABLE JSON FIXTURE</span></div>
+            <div class="input-toolbar"><label for="payload-editor">Customer scenario</label><button class="text-button" id="reset-sample" type="button">Reset sample <span aria-hidden="true">↺</span></button></div>
+            <textarea id="payload-editor" spellcheck="false" aria-describedby="input-help" rows="13"></textarea>
+            <p id="input-help" class="input-help">Change the fixture to test another outcome. This workflow uses synthetic data and has no external side effects.</p>
+            <div class="run-actions"><button type="button" id="run-workflow" class="run-button">Run workflow <span aria-hidden="true">↗</span></button><span id="run-status" role="status" aria-live="polite">Ready to inspect.</span></div>
+            <div id="run-error" class="error-banner" role="alert" hidden></div>
+
+            <section id="result-panel" aria-labelledby="result-heading" hidden>
+              <div class="runbook-divider"><span id="result-heading">02 / EVIDENCE</span><span id="result-mode">COMPUTED OUTPUT</span></div>
+              <div class="result-heading"><span class="evidence-dot" aria-hidden="true"></span><h4 id="result-summary"></h4></div>
+              <dl id="result-metrics" class="metric-grid"></dl>
+              <div id="result-warnings" class="warnings" hidden><h5>Review notes</h5><ul id="warnings-list"></ul></div>
+              <div id="record-section" hidden><div class="table-heading"><h5>Decision records</h5><span id="record-count"></span></div><div id="records-table" class="table-wrap" tabindex="0" role="region" aria-label="Decision records table"></div><p id="record-limit" class="input-help" hidden></p></div>
+              <details class="evidence-details"><summary>Full evidence JSON <span aria-hidden="true">+</span></summary><pre id="full-evidence" tabindex="0"></pre></details>
+              <dl id="run-metadata" class="run-metadata"></dl>
+            </section>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="handoff shell" aria-labelledby="handoff-title"><div><p class="eyebrow">BUILT TO BE TAKEN APART</p><h2 id="handoff-title">Clone it. Change an input.<br>Challenge a decision.</h2><p>The source includes tests, fixtures, design decisions, and honest production limits. Run locally to execute the workflows yourself.</p></div><div class="handoff-command"><span>START THE LAB</span><code>python -m fieldkit serve</code><a href="https://github.com/aayush0124/Automation/tree/portfolio/fieldkit-fde/fieldkit-fde#quickstart" target="_blank" rel="noopener noreferrer">Setup instructions <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+  <footer class="site-footer shell"><span class="footer-brand">FIELDKIT <span>/</span></span><p>Aayush Paliwal · Forward deployed engineering portfolio</p><a href="https://github.com/aayush0124/Automation/tree/portfolio/fieldkit-fde/fieldkit-fde" target="_blank" rel="noopener noreferrer">Inspect the source <span aria-hidden="true">↗</span></a></footer>
+</body>
+</html>

@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.local/
+.venv/
+.env
+.env.*
+*.sqlite3
+*.sqlite3-*
+.DS_Store
+evidence/*raw*

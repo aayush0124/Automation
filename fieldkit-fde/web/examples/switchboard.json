@@ -1,0 +1,249 @@
+{
+  "project": {
+    "id": "switchboard",
+    "name": "Switchboard",
+    "track": "operations",
+    "tagline": "Find the blast radius before proposing the fix.",
+    "description": "Correlate service failures, dependency impact and recent deploys in a reviewable incident brief.",
+    "customer": "A SaaS platform's on-call engineering team",
+    "skills": [
+      "Dependency graphs",
+      "Incident analysis",
+      "Evidence provenance",
+      "Safe operations"
+    ],
+    "flagship": false
+  },
+  "sample": {
+    "now_minute": 600,
+    "correlation_window_minutes": 30,
+    "alert_threshold_pct": 5,
+    "services": [
+      {
+        "id": "checkout",
+        "depends_on": [
+          "orders",
+          "payments"
+        ],
+        "error_rate_pct": 24,
+        "traffic_rpm": 420
+      },
+      {
+        "id": "orders",
+        "depends_on": [
+          "database"
+        ],
+        "error_rate_pct": 16,
+        "traffic_rpm": 650
+      },
+      {
+        "id": "payments",
+        "depends_on": [
+          "database"
+        ],
+        "error_rate_pct": 18,
+        "traffic_rpm": 310
+      },
+      {
+        "id": "database",
+        "depends_on": [],
+        "error_rate_pct": 38,
+        "traffic_rpm": 1200
+      },
+      {
+        "id": "catalog",
+        "depends_on": [
+          "cache"
+        ],
+        "error_rate_pct": 0.4,
+        "traffic_rpm": 900
+      },
+      {
+        "id": "cache",
+        "depends_on": [],
+        "error_rate_pct": 0.1,
+        "traffic_rpm": 1000
+      }
+    ],
+    "deployments": [
+      {
+        "service": "database",
+        "minute": 588,
+        "version": "pool-config-17"
+      },
+      {
+        "service": "checkout",
+        "minute": 410,
+        "version": "checkout-42"
+      }
+    ]
+  },
+  "result": {
+    "summary": "4 of 6 services are alerting; database is the highest-ranked hypothesis.",
+    "metrics": {
+      "services": 6,
+      "alerting_services": 4,
+      "cycle_edges": 0,
+      "recent_deployments": 1
+    },
+    "records": [
+      {
+        "service": "database",
+        "hypothesis_score": 63.0,
+        "error_rate_pct": 38.0,
+        "potentially_affected_services": [
+          "checkout",
+          "orders",
+          "payments"
+        ],
+        "alerting_dependents": [
+          "checkout",
+          "orders",
+          "payments"
+        ],
+        "unhealthy_dependencies": [],
+        "recent_deployments": [
+          {
+            "version": "pool-config-17",
+            "age_minutes": 12.0,
+            "minute": 588.0
+          }
+        ],
+        "estimated_failed_requests_per_minute": 456.0,
+        "evidence": [
+          "Observed error rate 38%",
+          "3 downstream services also alerting",
+          "1 deployment(s) in the correlation window",
+          "0 unhealthy direct dependencies"
+        ]
+      },
+      {
+        "service": "payments",
+        "hypothesis_score": 15.0,
+        "error_rate_pct": 18.0,
+        "potentially_affected_services": [
+          "checkout"
+        ],
+        "alerting_dependents": [
+          "checkout"
+        ],
+        "unhealthy_dependencies": [
+          "database"
+        ],
+        "recent_deployments": [],
+        "estimated_failed_requests_per_minute": 55.8,
+        "evidence": [
+          "Observed error rate 18%",
+          "1 downstream services also alerting",
+          "0 deployment(s) in the correlation window",
+          "1 unhealthy direct dependencies"
+        ]
+      },
+      {
+        "service": "orders",
+        "hypothesis_score": 13.0,
+        "error_rate_pct": 16.0,
+        "potentially_affected_services": [
+          "checkout"
+        ],
+        "alerting_dependents": [
+          "checkout"
+        ],
+        "unhealthy_dependencies": [
+          "database"
+        ],
+        "recent_deployments": [],
+        "estimated_failed_requests_per_minute": 104.0,
+        "evidence": [
+          "Observed error rate 16%",
+          "1 downstream services also alerting",
+          "0 deployment(s) in the correlation window",
+          "1 unhealthy direct dependencies"
+        ]
+      },
+      {
+        "service": "checkout",
+        "hypothesis_score": 8.0,
+        "error_rate_pct": 24.0,
+        "potentially_affected_services": [],
+        "alerting_dependents": [],
+        "unhealthy_dependencies": [
+          "orders",
+          "payments"
+        ],
+        "recent_deployments": [],
+        "estimated_failed_requests_per_minute": 100.8,
+        "evidence": [
+          "Observed error rate 24%",
+          "0 downstream services also alerting",
+          "0 deployment(s) in the correlation window",
+          "2 unhealthy direct dependencies"
+        ]
+      }
+    ],
+    "warnings": [
+      "Hypothesis scores are deterministic heuristics, not causal proof or calibrated probabilities."
+    ],
+    "response_plan": [
+      {
+        "priority": 1,
+        "service": "database",
+        "status": "review_required",
+        "next_step": "Compare traces and dependency health; verify the hypothesis before changing the system.",
+        "change_review": "Review recent deployment diff and prepare an approved rollback only if evidence confirms it."
+      },
+      {
+        "priority": 2,
+        "service": "payments",
+        "status": "review_required",
+        "next_step": "Compare traces and dependency health; verify the hypothesis before changing the system.",
+        "change_review": "Inspect recent configuration and resource saturation; no temporal deployment evidence is available."
+      },
+      {
+        "priority": 3,
+        "service": "orders",
+        "status": "review_required",
+        "next_step": "Compare traces and dependency health; verify the hypothesis before changing the system.",
+        "change_review": "Inspect recent configuration and resource saturation; no temporal deployment evidence is available."
+      }
+    ],
+    "mode": "dry_run",
+    "graph": {
+      "nodes": [
+        "cache",
+        "catalog",
+        "checkout",
+        "database",
+        "orders",
+        "payments"
+      ],
+      "edges": [
+        {
+          "service": "checkout",
+          "depends_on": "orders"
+        },
+        {
+          "service": "checkout",
+          "depends_on": "payments"
+        },
+        {
+          "service": "orders",
+          "depends_on": "database"
+        },
+        {
+          "service": "payments",
+          "depends_on": "database"
+        },
+        {
+          "service": "catalog",
+          "depends_on": "cache"
+        }
+      ],
+      "cycle_edges": []
+    },
+    "score_formula": "max(0, own error percentage + 5 * alerting downstream services + 10 if recent deployment - 8 * unhealthy direct dependencies)"
+  },
+  "input_sha256": "9e0400d5f187293e4e8fefbbcdbfe2e18f7d95b0ab135cba36a715fbd000deb6",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

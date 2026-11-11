@@ -1,0 +1,280 @@
+{
+  "project": {
+    "id": "relay",
+    "name": "Relay",
+    "track": "reliability",
+    "tagline": "Replay chaos. Deliver each local state transition once.",
+    "description": "A durable webhook inbox/outbox with tenant-scoped deduplication, retries, dead letters and version ordering.",
+    "customer": "A SaaS integration team receiving duplicate and out-of-order order webhooks.",
+    "skills": [
+      "SQLite transactions",
+      "idempotency",
+      "retry policies",
+      "event ordering",
+      "failure recovery"
+    ],
+    "flagship": false
+  },
+  "sample": {
+    "events": [
+      {
+        "tenant": "north",
+        "key": "order-42-v2",
+        "aggregate": "order-42",
+        "version": 2,
+        "body": {
+          "state": "packed"
+        }
+      },
+      {
+        "tenant": "north",
+        "key": "order-42-v1",
+        "aggregate": "order-42",
+        "version": 1,
+        "body": {
+          "state": "paid"
+        },
+        "failures_before_success": 1
+      },
+      {
+        "tenant": "north",
+        "key": "order-42-v1",
+        "aggregate": "order-42",
+        "version": 1,
+        "body": {
+          "state": "paid"
+        }
+      },
+      {
+        "tenant": "south",
+        "key": "order-42-v1",
+        "aggregate": "order-42",
+        "version": 1,
+        "body": {
+          "state": "paid"
+        }
+      },
+      {
+        "tenant": "north",
+        "key": "order-43-v1",
+        "aggregate": "order-43",
+        "version": 1,
+        "body": {
+          "state": "paid"
+        },
+        "failures_before_success": 99
+      }
+    ],
+    "ticks": [
+      0,
+      1,
+      2,
+      3,
+      7,
+      15
+    ],
+    "max_attempts": 3,
+    "base_delay_seconds": 1
+  },
+  "result": {
+    "summary": "3 delivered, 1 duplicates suppressed, 1 dead-lettered.",
+    "metrics": {
+      "received": 5,
+      "unique_events": 4,
+      "duplicates": 1,
+      "conflicts": 0,
+      "delivered": 3,
+      "dead_letters": 1,
+      "pending": 0,
+      "delivery_attempts": 7
+    },
+    "records": [
+      {
+        "tenant": "north",
+        "key": "order-42-v1",
+        "aggregate": "order-42",
+        "version": 1,
+        "status": "delivered",
+        "attempts": 2,
+        "order_waits": 0,
+        "next_at": 1.0,
+        "last_error": null
+      },
+      {
+        "tenant": "north",
+        "key": "order-42-v2",
+        "aggregate": "order-42",
+        "version": 2,
+        "status": "delivered",
+        "attempts": 1,
+        "order_waits": 1,
+        "next_at": 1.0,
+        "last_error": null
+      },
+      {
+        "tenant": "north",
+        "key": "order-43-v1",
+        "aggregate": "order-43",
+        "version": 1,
+        "status": "dead_letter",
+        "attempts": 3,
+        "order_waits": 0,
+        "next_at": 7.0,
+        "last_error": "Injected sink failure"
+      },
+      {
+        "tenant": "south",
+        "key": "order-42-v1",
+        "aggregate": "order-42",
+        "version": 1,
+        "status": "delivered",
+        "attempts": 1,
+        "order_waits": 0,
+        "next_at": 0.0,
+        "last_error": null
+      }
+    ],
+    "warnings": [
+      "Synthetic sink: no external webhook was sent. Exactly-once local state does not imply exactly-once network delivery."
+    ],
+    "receipts": [
+      {
+        "tenant": "north",
+        "key": "order-42-v2",
+        "status": "accepted"
+      },
+      {
+        "tenant": "north",
+        "key": "order-42-v1",
+        "status": "accepted"
+      },
+      {
+        "tenant": "north",
+        "key": "order-42-v1",
+        "status": "duplicate"
+      },
+      {
+        "tenant": "south",
+        "key": "order-42-v1",
+        "status": "accepted"
+      },
+      {
+        "tenant": "north",
+        "key": "order-43-v1",
+        "status": "accepted"
+      }
+    ],
+    "trace": [
+      {
+        "time_seconds": 0.0,
+        "tenant": "north",
+        "key": "order-42-v1",
+        "version": 1,
+        "status": "retry",
+        "attempts": 1,
+        "order_waits": 0,
+        "next_attempt_seconds": 1.0,
+        "reason": "Injected sink failure"
+      },
+      {
+        "time_seconds": 0.0,
+        "tenant": "north",
+        "key": "order-42-v2",
+        "version": 2,
+        "status": "waiting",
+        "attempts": 0,
+        "order_waits": 1,
+        "next_attempt_seconds": 1.0,
+        "reason": "Missing predecessor version 1"
+      },
+      {
+        "time_seconds": 0.0,
+        "tenant": "north",
+        "key": "order-43-v1",
+        "version": 1,
+        "status": "retry",
+        "attempts": 1,
+        "order_waits": 0,
+        "next_attempt_seconds": 1.0,
+        "reason": "Injected sink failure"
+      },
+      {
+        "time_seconds": 0.0,
+        "tenant": "south",
+        "key": "order-42-v1",
+        "version": 1,
+        "status": "delivered",
+        "attempts": 1,
+        "order_waits": 0,
+        "next_attempt_seconds": null,
+        "reason": null
+      },
+      {
+        "time_seconds": 1.0,
+        "tenant": "north",
+        "key": "order-42-v1",
+        "version": 1,
+        "status": "delivered",
+        "attempts": 2,
+        "order_waits": 0,
+        "next_attempt_seconds": null,
+        "reason": null
+      },
+      {
+        "time_seconds": 1.0,
+        "tenant": "north",
+        "key": "order-42-v2",
+        "version": 2,
+        "status": "delivered",
+        "attempts": 1,
+        "order_waits": 1,
+        "next_attempt_seconds": null,
+        "reason": null
+      },
+      {
+        "time_seconds": 1.0,
+        "tenant": "north",
+        "key": "order-43-v1",
+        "version": 1,
+        "status": "retry",
+        "attempts": 2,
+        "order_waits": 0,
+        "next_attempt_seconds": 3.0,
+        "reason": "Injected sink failure"
+      },
+      {
+        "time_seconds": 3.0,
+        "tenant": "north",
+        "key": "order-43-v1",
+        "version": 1,
+        "status": "dead_letter",
+        "attempts": 3,
+        "order_waits": 0,
+        "next_attempt_seconds": null,
+        "reason": "Injected sink failure"
+      }
+    ],
+    "states": [
+      {
+        "tenant": "north",
+        "aggregate": "order-42",
+        "version": 2,
+        "body": {
+          "state": "packed"
+        }
+      },
+      {
+        "tenant": "south",
+        "aggregate": "order-42",
+        "version": 1,
+        "body": {
+          "state": "paid"
+        }
+      }
+    ],
+    "data_mode": "synthetic deterministic simulation"
+  },
+  "input_sha256": "960ad4955c1d8ddd0ebbd090b98d794e63ba6a21cca2cd573346d16ed90e02d8",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

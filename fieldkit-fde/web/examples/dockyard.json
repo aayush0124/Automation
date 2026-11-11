@@ -1,0 +1,323 @@
+{
+  "project": {
+    "id": "dockyard",
+    "name": "Dockyard",
+    "track": "enterprise",
+    "tagline": "Messy customer exports, explainable clean records.",
+    "description": "Normalize a CRM CSV, quarantine identity conflicts, and retain cell-level lineage.",
+    "customer": "A customer-success team migrating two acquired CRMs",
+    "skills": [
+      "data integration",
+      "schema mapping",
+      "data quality",
+      "lineage"
+    ],
+    "flagship": true
+  },
+  "sample": {
+    "csv": "Customer ID,Full Name,E-mail,Organisation,Country\nC-101, Mira Shah ,MIRA@example.test,Northstar Labs,in\nC-101,Mira Shah,mira@example.test,Northstar Labs,IN\nC-102,Dev Mehta,dev@example.test,Harbour Works,IN\nC-999,Dev Mehta,dev@example.test,Harbour Works,IN\nC-104,Sam Lee,not-an-email,Orbit Studio,SG\nC-105,Ana Ruiz,ana@example.test,Orbit Studio,es\n",
+    "mapping": {
+      "Customer ID": "external_id",
+      "Organisation": "company"
+    }
+  },
+  "result": {
+    "summary": "2 clean customers; 3 rows quarantined; 1 duplicate rows collapsed.",
+    "metrics": {
+      "input_rows": 6,
+      "clean_customers": 2,
+      "accepted_source_rows": 3,
+      "quarantined_rows": 3,
+      "duplicates_collapsed": 1,
+      "accepted_row_percent": 50.0
+    },
+    "records": [
+      {
+        "external_id": "C-105",
+        "name": "Ana Ruiz",
+        "email": "ana@example.test",
+        "company": "Orbit Studio",
+        "country": "ES",
+        "source_rows": [
+          7
+        ],
+        "lineage": {
+          "external_id": [
+            {
+              "row": 7,
+              "column": "Customer ID",
+              "raw": "C-105",
+              "normalized": "C-105"
+            }
+          ],
+          "name": [
+            {
+              "row": 7,
+              "column": "Full Name",
+              "raw": "Ana Ruiz",
+              "normalized": "Ana Ruiz"
+            }
+          ],
+          "email": [
+            {
+              "row": 7,
+              "column": "E-mail",
+              "raw": "ana@example.test",
+              "normalized": "ana@example.test"
+            }
+          ],
+          "company": [
+            {
+              "row": 7,
+              "column": "Organisation",
+              "raw": "Orbit Studio",
+              "normalized": "Orbit Studio"
+            }
+          ],
+          "country": [
+            {
+              "row": 7,
+              "column": "Country",
+              "raw": "es",
+              "normalized": "ES"
+            }
+          ]
+        }
+      },
+      {
+        "external_id": "C-101",
+        "name": "Mira Shah",
+        "email": "mira@example.test",
+        "company": "Northstar Labs",
+        "country": "IN",
+        "source_rows": [
+          2,
+          3
+        ],
+        "lineage": {
+          "external_id": [
+            {
+              "row": 2,
+              "column": "Customer ID",
+              "raw": "C-101",
+              "normalized": "C-101"
+            },
+            {
+              "row": 3,
+              "column": "Customer ID",
+              "raw": "C-101",
+              "normalized": "C-101"
+            }
+          ],
+          "name": [
+            {
+              "row": 2,
+              "column": "Full Name",
+              "raw": " Mira Shah ",
+              "normalized": "Mira Shah"
+            },
+            {
+              "row": 3,
+              "column": "Full Name",
+              "raw": "Mira Shah",
+              "normalized": "Mira Shah"
+            }
+          ],
+          "email": [
+            {
+              "row": 2,
+              "column": "E-mail",
+              "raw": "MIRA@example.test",
+              "normalized": "mira@example.test"
+            },
+            {
+              "row": 3,
+              "column": "E-mail",
+              "raw": "mira@example.test",
+              "normalized": "mira@example.test"
+            }
+          ],
+          "company": [
+            {
+              "row": 2,
+              "column": "Organisation",
+              "raw": "Northstar Labs",
+              "normalized": "Northstar Labs"
+            },
+            {
+              "row": 3,
+              "column": "Organisation",
+              "raw": "Northstar Labs",
+              "normalized": "Northstar Labs"
+            }
+          ],
+          "country": [
+            {
+              "row": 2,
+              "column": "Country",
+              "raw": "in",
+              "normalized": "IN"
+            },
+            {
+              "row": 3,
+              "column": "Country",
+              "raw": "IN",
+              "normalized": "IN"
+            }
+          ]
+        }
+      }
+    ],
+    "warnings": [
+      "The included sample is synthetic; this is a deterministic import preview, not a CRM write.",
+      "Conflicting and invalid rows need review before import."
+    ],
+    "quarantine": [
+      {
+        "row": 4,
+        "reasons": [
+          "conflicting_values:external_id"
+        ],
+        "record": {
+          "external_id": "C-102",
+          "name": "Dev Mehta",
+          "email": "dev@example.test",
+          "company": "Harbour Works",
+          "country": "IN"
+        },
+        "lineage": {
+          "external_id": {
+            "row": 4,
+            "column": "Customer ID",
+            "raw": "C-102",
+            "normalized": "C-102"
+          },
+          "name": {
+            "row": 4,
+            "column": "Full Name",
+            "raw": "Dev Mehta",
+            "normalized": "Dev Mehta"
+          },
+          "email": {
+            "row": 4,
+            "column": "E-mail",
+            "raw": "dev@example.test",
+            "normalized": "dev@example.test"
+          },
+          "company": {
+            "row": 4,
+            "column": "Organisation",
+            "raw": "Harbour Works",
+            "normalized": "Harbour Works"
+          },
+          "country": {
+            "row": 4,
+            "column": "Country",
+            "raw": "IN",
+            "normalized": "IN"
+          }
+        }
+      },
+      {
+        "row": 5,
+        "reasons": [
+          "conflicting_values:external_id"
+        ],
+        "record": {
+          "external_id": "C-999",
+          "name": "Dev Mehta",
+          "email": "dev@example.test",
+          "company": "Harbour Works",
+          "country": "IN"
+        },
+        "lineage": {
+          "external_id": {
+            "row": 5,
+            "column": "Customer ID",
+            "raw": "C-999",
+            "normalized": "C-999"
+          },
+          "name": {
+            "row": 5,
+            "column": "Full Name",
+            "raw": "Dev Mehta",
+            "normalized": "Dev Mehta"
+          },
+          "email": {
+            "row": 5,
+            "column": "E-mail",
+            "raw": "dev@example.test",
+            "normalized": "dev@example.test"
+          },
+          "company": {
+            "row": 5,
+            "column": "Organisation",
+            "raw": "Harbour Works",
+            "normalized": "Harbour Works"
+          },
+          "country": {
+            "row": 5,
+            "column": "Country",
+            "raw": "IN",
+            "normalized": "IN"
+          }
+        }
+      },
+      {
+        "row": 6,
+        "reasons": [
+          "invalid_email"
+        ],
+        "record": {
+          "external_id": "C-104",
+          "name": "Sam Lee",
+          "email": "not-an-email",
+          "company": "Orbit Studio",
+          "country": "SG"
+        },
+        "lineage": {
+          "external_id": {
+            "row": 6,
+            "column": "Customer ID",
+            "raw": "C-104",
+            "normalized": "C-104"
+          },
+          "name": {
+            "row": 6,
+            "column": "Full Name",
+            "raw": "Sam Lee",
+            "normalized": "Sam Lee"
+          },
+          "email": {
+            "row": 6,
+            "column": "E-mail",
+            "raw": "not-an-email",
+            "normalized": "not-an-email"
+          },
+          "company": {
+            "row": 6,
+            "column": "Organisation",
+            "raw": "Orbit Studio",
+            "normalized": "Orbit Studio"
+          },
+          "country": {
+            "row": 6,
+            "column": "Country",
+            "raw": "SG",
+            "normalized": "SG"
+          }
+        }
+      }
+    ],
+    "resolved_mapping": {
+      "Customer ID": "external_id",
+      "Full Name": "name",
+      "E-mail": "email",
+      "Organisation": "company",
+      "Country": "country"
+    }
+  },
+  "input_sha256": "8a7555ab04e5da9a94b54559ffa5e206784cd764291a549639884c9578f1b9ef",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

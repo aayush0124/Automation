@@ -1,0 +1,161 @@
+{
+  "projects": [
+    {
+      "id": "dockyard",
+      "name": "Dockyard",
+      "track": "enterprise",
+      "tagline": "Messy customer exports, explainable clean records.",
+      "description": "Normalize a CRM CSV, quarantine identity conflicts, and retain cell-level lineage.",
+      "customer": "A customer-success team migrating two acquired CRMs",
+      "skills": [
+        "data integration",
+        "schema mapping",
+        "data quality",
+        "lineage"
+      ],
+      "flagship": true
+    },
+    {
+      "id": "proofdesk",
+      "name": "ProofDesk",
+      "track": "enterprise",
+      "tagline": "Evidence that respects the permission boundary.",
+      "description": "Resolve document versions, enforce tenant and role access, rank lexical evidence, or abstain.",
+      "customer": "An enterprise support team searching conflicting customer policies",
+      "skills": [
+        "retrieval",
+        "authorization boundaries",
+        "versioning",
+        "abstention",
+        "evaluation"
+      ],
+      "flagship": true
+    },
+    {
+      "id": "evalforge",
+      "name": "EvalForge",
+      "track": "reliability",
+      "tagline": "Make the release decision explain itself.",
+      "description": "A paired acceptance bench that gates agent changes on answers, evidence, abstention, critical failures, cost and latency.",
+      "customer": "Enterprise AI teams replacing an agent or changing its prompts and tools.",
+      "skills": [
+        "Agent evaluation",
+        "Paired experiments",
+        "Release gates",
+        "Failure analysis",
+        "Cost and latency"
+      ],
+      "flagship": true
+    },
+    {
+      "id": "ledgerguard",
+      "name": "LedgerGuard",
+      "track": "operations",
+      "tagline": "Every invoice decision has a receipt trail.",
+      "description": "Reconcile invoices against purchase orders and goods receipts with exact money and review holds.",
+      "customer": "A procurement team reconciling supplier invoices across currencies",
+      "skills": [
+        "financial data integration",
+        "exact arithmetic",
+        "reconciliation",
+        "auditability"
+      ],
+      "flagship": false
+    },
+    {
+      "id": "relay",
+      "name": "Relay",
+      "track": "reliability",
+      "tagline": "Replay chaos. Deliver each local state transition once.",
+      "description": "A durable webhook inbox/outbox with tenant-scoped deduplication, retries, dead letters and version ordering.",
+      "customer": "A SaaS integration team receiving duplicate and out-of-order order webhooks.",
+      "skills": [
+        "SQLite transactions",
+        "idempotency",
+        "retry policies",
+        "event ordering",
+        "failure recovery"
+      ],
+      "flagship": false
+    },
+    {
+      "id": "switchboard",
+      "name": "Switchboard",
+      "track": "operations",
+      "tagline": "Find the blast radius before proposing the fix.",
+      "description": "Correlate service failures, dependency impact and recent deploys in a reviewable incident brief.",
+      "customer": "A SaaS platform's on-call engineering team",
+      "skills": [
+        "Dependency graphs",
+        "Incident analysis",
+        "Evidence provenance",
+        "Safe operations"
+      ],
+      "flagship": false
+    },
+    {
+      "id": "routecraft",
+      "name": "RouteCraft",
+      "track": "operations",
+      "tagline": "Make promises the fleet can actually keep.",
+      "description": "Construct feasible delivery routes and explain every unassigned job under capacity, time-window and shift constraints.",
+      "customer": "A regional distributor planning a small delivery fleet",
+      "skills": [
+        "Constraint modeling",
+        "Routing heuristics",
+        "Operational tradeoffs",
+        "Baseline evaluation"
+      ],
+      "flagship": false
+    },
+    {
+      "id": "consentline",
+      "name": "ConsentLine",
+      "track": "enterprise",
+      "tagline": "Give a workflow the minimum data it is allowed to use.",
+      "description": "Purpose-bound redaction, keyed pseudonyms, span-level evidence and a fail-closed egress decision for synthetic support text.",
+      "customer": "A support platform sharing ticket excerpts with an external analysis vendor",
+      "skills": [
+        "data minimization",
+        "policy enforcement",
+        "HMAC pseudonyms",
+        "audit trails",
+        "failure handling"
+      ],
+      "flagship": false
+    },
+    {
+      "id": "shiftforge",
+      "name": "ShiftForge",
+      "track": "operations",
+      "tagline": "Turn an overloaded order book into a feasible shift.",
+      "description": "Schedule dependent manufacturing jobs against machine skills, release times and maintenance windows.",
+      "customer": "A small manufacturer coordinating production and customer promises",
+      "skills": [
+        "DAG scheduling",
+        "Capacity planning",
+        "Explainability",
+        "Constraint validation"
+      ],
+      "flagship": false
+    },
+    {
+      "id": "launchgate",
+      "name": "LaunchGate",
+      "track": "reliability",
+      "tagline": "A release decision that explains its evidence.",
+      "description": "An inspectable canary gate combining traffic sufficiency, SLO burn, latency and baseline regression.",
+      "customer": "A platform team deciding whether to expand, pause or roll back a customer-facing release.",
+      "skills": [
+        "SLOs",
+        "canary releases",
+        "error budgets",
+        "latency analysis",
+        "operational handoff"
+      ],
+      "flagship": false
+    }
+  ],
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

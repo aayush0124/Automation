@@ -1,0 +1,225 @@
+{
+  "project": {
+    "id": "ledgerguard",
+    "name": "LedgerGuard",
+    "track": "operations",
+    "tagline": "Every invoice decision has a receipt trail.",
+    "description": "Reconcile invoices against purchase orders and goods receipts with exact money and review holds.",
+    "customer": "A procurement team reconciling supplier invoices across currencies",
+    "skills": [
+      "financial data integration",
+      "exact arithmetic",
+      "reconciliation",
+      "auditability"
+    ],
+    "flagship": false
+  },
+  "sample": {
+    "purchase_orders": [
+      {
+        "id": "PO-100",
+        "vendor": "Harbour Parts",
+        "currency": "INR",
+        "lines": [
+          {
+            "sku": "FILTER-A",
+            "quantity": 10,
+            "unit_price": "125.50"
+          },
+          {
+            "sku": "VALVE-B",
+            "quantity": 4,
+            "unit_price": "300.00"
+          }
+        ]
+      }
+    ],
+    "receipts": [
+      {
+        "id": "GR-1",
+        "po_id": "PO-100",
+        "sku": "FILTER-A",
+        "quantity": 6
+      },
+      {
+        "id": "GR-2",
+        "po_id": "PO-100",
+        "sku": "VALVE-B",
+        "quantity": 4
+      }
+    ],
+    "prior_paid": [],
+    "invoices": [
+      {
+        "id": "INV-1",
+        "po_id": "PO-100",
+        "vendor": "Harbour Parts",
+        "currency": "INR",
+        "lines": [
+          {
+            "sku": "FILTER-A",
+            "quantity": 4,
+            "unit_price": "125.50"
+          }
+        ]
+      },
+      {
+        "id": "INV-2",
+        "po_id": "PO-100",
+        "vendor": "Harbour Parts",
+        "currency": "INR",
+        "lines": [
+          {
+            "sku": "FILTER-A",
+            "quantity": 3,
+            "unit_price": "125.50"
+          }
+        ]
+      },
+      {
+        "id": "INV-3",
+        "po_id": "PO-100",
+        "vendor": "Harbour Parts",
+        "currency": "INR",
+        "lines": [
+          {
+            "sku": "VALVE-B",
+            "quantity": 2,
+            "unit_price": "350.00"
+          }
+        ]
+      },
+      {
+        "id": "INV-4",
+        "po_id": "PO-100",
+        "vendor": "Harbour Parts",
+        "currency": "USD",
+        "lines": [
+          {
+            "sku": "VALVE-B",
+            "quantity": 1,
+            "unit_price": "300.00"
+          }
+        ]
+      }
+    ]
+  },
+  "result": {
+    "summary": "1 invoices matched for human review; 3 held with evidence.",
+    "metrics": {
+      "invoices": 4,
+      "matched": 1,
+      "held": 3
+    },
+    "records": [
+      {
+        "invoice_id": "INV-1",
+        "po_id": "PO-100",
+        "decision": "ready_for_review",
+        "reasons": [],
+        "currency": "INR",
+        "amount_cents": 50200,
+        "evidence": [
+          {
+            "sku": "FILTER-A",
+            "ordered_quantity": 10,
+            "received_quantity": 6,
+            "previously_allocated_quantity": 0,
+            "available_quantity": 6,
+            "invoice_quantity": 4,
+            "order_unit_price_cents": 12550,
+            "invoice_unit_price_cents": 12550,
+            "receipt_ids": [
+              "GR-1"
+            ]
+          }
+        ]
+      },
+      {
+        "invoice_id": "INV-2",
+        "po_id": "PO-100",
+        "decision": "hold",
+        "reasons": [
+          "quantity_exceeds_unbilled_receipts:FILTER-A"
+        ],
+        "currency": "INR",
+        "amount_cents": 37650,
+        "evidence": [
+          {
+            "sku": "FILTER-A",
+            "ordered_quantity": 10,
+            "received_quantity": 6,
+            "previously_allocated_quantity": 4,
+            "available_quantity": 2,
+            "invoice_quantity": 3,
+            "order_unit_price_cents": 12550,
+            "invoice_unit_price_cents": 12550,
+            "receipt_ids": [
+              "GR-1"
+            ]
+          }
+        ]
+      },
+      {
+        "invoice_id": "INV-3",
+        "po_id": "PO-100",
+        "decision": "hold",
+        "reasons": [
+          "price_above_order:VALVE-B"
+        ],
+        "currency": "INR",
+        "amount_cents": 70000,
+        "evidence": [
+          {
+            "sku": "VALVE-B",
+            "ordered_quantity": 4,
+            "received_quantity": 4,
+            "previously_allocated_quantity": 0,
+            "available_quantity": 4,
+            "invoice_quantity": 2,
+            "order_unit_price_cents": 30000,
+            "invoice_unit_price_cents": 35000,
+            "receipt_ids": [
+              "GR-2"
+            ]
+          }
+        ]
+      },
+      {
+        "invoice_id": "INV-4",
+        "po_id": "PO-100",
+        "decision": "hold",
+        "reasons": [
+          "currency_mismatch"
+        ],
+        "currency": "USD",
+        "amount_cents": 30000,
+        "evidence": [
+          {
+            "sku": "VALVE-B",
+            "ordered_quantity": 4,
+            "received_quantity": 4,
+            "previously_allocated_quantity": 0,
+            "available_quantity": 4,
+            "invoice_quantity": 1,
+            "order_unit_price_cents": 30000,
+            "invoice_unit_price_cents": 30000,
+            "receipt_ids": [
+              "GR-2"
+            ]
+          }
+        ]
+      }
+    ],
+    "warnings": [
+      "Synthetic procurement demo. No payments are executed.",
+      "Input order determines reservation priority. All currencies use two decimal places in this demo; tax, FX and credit notes are not modeled."
+    ],
+    "matched_amount_cents_by_currency": {
+      "INR": 50200
+    }
+  },
+  "input_sha256": "13e691c029f5cd36aa4b7d6379e17ef18460e5d8045e9b639f50a56522591ec5",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

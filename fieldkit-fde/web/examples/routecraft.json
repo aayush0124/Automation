@@ -1,0 +1,384 @@
+{
+  "project": {
+    "id": "routecraft",
+    "name": "RouteCraft",
+    "track": "operations",
+    "tagline": "Make promises the fleet can actually keep.",
+    "description": "Construct feasible delivery routes and explain every unassigned job under capacity, time-window and shift constraints.",
+    "customer": "A regional distributor planning a small delivery fleet",
+    "skills": [
+      "Constraint modeling",
+      "Routing heuristics",
+      "Operational tradeoffs",
+      "Baseline evaluation"
+    ],
+    "flagship": false
+  },
+  "sample": {
+    "depot": [
+      0,
+      0
+    ],
+    "vehicles": [
+      {
+        "id": "van-1",
+        "capacity": 8,
+        "shift_start": 0,
+        "shift_end": 90,
+        "speed_units_per_minute": 1
+      },
+      {
+        "id": "van-2",
+        "capacity": 6,
+        "shift_start": 0,
+        "shift_end": 70,
+        "speed_units_per_minute": 1
+      }
+    ],
+    "jobs": [
+      {
+        "id": "tea-shop",
+        "location": [
+          12,
+          4
+        ],
+        "demand": 3,
+        "window_start": 20,
+        "window_end": 55,
+        "service_minutes": 5
+      },
+      {
+        "id": "bakery",
+        "location": [
+          3,
+          4
+        ],
+        "demand": 2,
+        "window_start": 0,
+        "window_end": 20,
+        "service_minutes": 4
+      },
+      {
+        "id": "grocer",
+        "location": [
+          10,
+          8
+        ],
+        "demand": 3,
+        "window_start": 15,
+        "window_end": 50,
+        "service_minutes": 5
+      },
+      {
+        "id": "cafe",
+        "location": [
+          4,
+          2
+        ],
+        "demand": 2,
+        "window_start": 5,
+        "window_end": 25,
+        "service_minutes": 3
+      },
+      {
+        "id": "wholesaler",
+        "location": [
+          6,
+          6
+        ],
+        "demand": 12,
+        "window_start": 0,
+        "window_end": 60,
+        "service_minutes": 8
+      },
+      {
+        "id": "distant-kiosk",
+        "location": [
+          90,
+          0
+        ],
+        "demand": 1,
+        "window_start": 0,
+        "window_end": 25,
+        "service_minutes": 2
+      }
+    ]
+  },
+  "result": {
+    "summary": "Assigned 4/6 deliveries across 2 vehicles; 2 require dispatcher review.",
+    "metrics": {
+      "assigned_jobs": 4,
+      "unassigned_jobs": 2,
+      "distance_units": 53.826,
+      "baseline_assigned_jobs": 4,
+      "baseline_distance_units": 41.635
+    },
+    "records": [
+      {
+        "vehicle": "van-1",
+        "sequence": 1,
+        "job": "bakery",
+        "arrival_minute": 5.0,
+        "service_start_minute": 5.0,
+        "service_end_minute": 9.0,
+        "wait_minutes": 0.0,
+        "demand": 2.0,
+        "location": [
+          3.0,
+          4.0
+        ],
+        "leg_distance_units": 5.0
+      },
+      {
+        "vehicle": "van-1",
+        "sequence": 2,
+        "job": "cafe",
+        "arrival_minute": 11.236,
+        "service_start_minute": 11.236,
+        "service_end_minute": 14.236,
+        "wait_minutes": 0.0,
+        "demand": 2.0,
+        "location": [
+          4.0,
+          2.0
+        ],
+        "leg_distance_units": 2.236
+      },
+      {
+        "vehicle": "van-1",
+        "sequence": 3,
+        "job": "grocer",
+        "arrival_minute": 22.721,
+        "service_start_minute": 22.721,
+        "service_end_minute": 27.721,
+        "wait_minutes": 0.0,
+        "demand": 3.0,
+        "location": [
+          10.0,
+          8.0
+        ],
+        "leg_distance_units": 8.485
+      },
+      {
+        "vehicle": "van-2",
+        "sequence": 1,
+        "job": "tea-shop",
+        "arrival_minute": 12.649,
+        "service_start_minute": 20.0,
+        "service_end_minute": 25.0,
+        "wait_minutes": 7.351,
+        "demand": 3.0,
+        "location": [
+          12.0,
+          4.0
+        ],
+        "leg_distance_units": 12.649
+      }
+    ],
+    "routes": [
+      {
+        "vehicle": "van-1",
+        "load": 7.0,
+        "capacity": 8.0,
+        "distance_units": 28.528,
+        "return_minute": 40.528,
+        "stops": [
+          {
+            "job": "bakery",
+            "arrival_minute": 5.0,
+            "service_start_minute": 5.0,
+            "service_end_minute": 9.0,
+            "wait_minutes": 0.0,
+            "demand": 2.0,
+            "location": [
+              3.0,
+              4.0
+            ],
+            "leg_distance_units": 5.0
+          },
+          {
+            "job": "cafe",
+            "arrival_minute": 11.236,
+            "service_start_minute": 11.236,
+            "service_end_minute": 14.236,
+            "wait_minutes": 0.0,
+            "demand": 2.0,
+            "location": [
+              4.0,
+              2.0
+            ],
+            "leg_distance_units": 2.236
+          },
+          {
+            "job": "grocer",
+            "arrival_minute": 22.721,
+            "service_start_minute": 22.721,
+            "service_end_minute": 27.721,
+            "wait_minutes": 0.0,
+            "demand": 3.0,
+            "location": [
+              10.0,
+              8.0
+            ],
+            "leg_distance_units": 8.485
+          }
+        ]
+      },
+      {
+        "vehicle": "van-2",
+        "load": 3.0,
+        "capacity": 6.0,
+        "distance_units": 25.298,
+        "return_minute": 37.649,
+        "stops": [
+          {
+            "job": "tea-shop",
+            "arrival_minute": 12.649,
+            "service_start_minute": 20.0,
+            "service_end_minute": 25.0,
+            "wait_minutes": 7.351,
+            "demand": 3.0,
+            "location": [
+              12.0,
+              4.0
+            ],
+            "leg_distance_units": 12.649
+          }
+        ]
+      }
+    ],
+    "unassigned": [
+      {
+        "job": "distant-kiosk",
+        "reason": "no_individually_feasible_vehicle",
+        "constraint_evidence": [
+          "service_completion_window"
+        ],
+        "single_job_constraint_evidence": [
+          "service_completion_window"
+        ]
+      },
+      {
+        "job": "wholesaler",
+        "reason": "no_individually_feasible_vehicle",
+        "constraint_evidence": [
+          "capacity"
+        ],
+        "single_job_constraint_evidence": [
+          "capacity"
+        ]
+      }
+    ],
+    "baseline": {
+      "method": "input-order, first-feasible-vehicle append",
+      "routes": [
+        {
+          "vehicle": "van-1",
+          "load": 6.0,
+          "capacity": 8.0,
+          "distance_units": 29.927,
+          "return_minute": 47.278,
+          "stops": [
+            {
+              "job": "tea-shop",
+              "arrival_minute": 12.649,
+              "service_start_minute": 20.0,
+              "service_end_minute": 25.0,
+              "wait_minutes": 7.351,
+              "demand": 3.0,
+              "location": [
+                12.0,
+                4.0
+              ],
+              "leg_distance_units": 12.649
+            },
+            {
+              "job": "grocer",
+              "arrival_minute": 29.472,
+              "service_start_minute": 29.472,
+              "service_end_minute": 34.472,
+              "wait_minutes": 0.0,
+              "demand": 3.0,
+              "location": [
+                10.0,
+                8.0
+              ],
+              "leg_distance_units": 4.472
+            }
+          ]
+        },
+        {
+          "vehicle": "van-2",
+          "load": 4.0,
+          "capacity": 6.0,
+          "distance_units": 11.708,
+          "return_minute": 18.708,
+          "stops": [
+            {
+              "job": "bakery",
+              "arrival_minute": 5.0,
+              "service_start_minute": 5.0,
+              "service_end_minute": 9.0,
+              "wait_minutes": 0.0,
+              "demand": 2.0,
+              "location": [
+                3.0,
+                4.0
+              ],
+              "leg_distance_units": 5.0
+            },
+            {
+              "job": "cafe",
+              "arrival_minute": 11.236,
+              "service_start_minute": 11.236,
+              "service_end_minute": 14.236,
+              "wait_minutes": 0.0,
+              "demand": 2.0,
+              "location": [
+                4.0,
+                2.0
+              ],
+              "leg_distance_units": 2.236
+            }
+          ]
+        }
+      ],
+      "unassigned": [
+        {
+          "job": "wholesaler",
+          "reason": "no_individually_feasible_vehicle",
+          "constraint_evidence": [
+            "capacity"
+          ],
+          "single_job_constraint_evidence": [
+            "capacity"
+          ]
+        },
+        {
+          "job": "distant-kiosk",
+          "reason": "no_individually_feasible_vehicle",
+          "constraint_evidence": [
+            "service_completion_window"
+          ],
+          "single_job_constraint_evidence": [
+            "service_completion_window"
+          ]
+        }
+      ]
+    },
+    "comparison": {
+      "assigned_job_delta": 0,
+      "distance_delta_units": 12.191,
+      "distance_comparable": true,
+      "served_job_sets_match": true
+    },
+    "warnings": [
+      "Synthetic planar coordinates: distance units are Euclidean, not road kilometres or traffic-aware travel times.",
+      "Deadline-ordered cheapest feasible insertion is a heuristic; it does not prove optimality or outperform every baseline.",
+      "Windows constrain service completion. Every route must return to the depot before its shift ends. Capacity is total outbound delivery load."
+    ]
+  },
+  "input_sha256": "e63898590c3d4ca0fbf0d3dfcb5f1ddd245e4d6f2f4dbb1474f4bf9f309a1b9b",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}

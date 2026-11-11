@@ -1,0 +1,120 @@
+{
+  "project": {
+    "id": "proofdesk",
+    "name": "ProofDesk",
+    "track": "enterprise",
+    "tagline": "Evidence that respects the permission boundary.",
+    "description": "Resolve document versions, enforce tenant and role access, rank lexical evidence, or abstain.",
+    "customer": "An enterprise support team searching conflicting customer policies",
+    "skills": [
+      "retrieval",
+      "authorization boundaries",
+      "versioning",
+      "abstention",
+      "evaluation"
+    ],
+    "flagship": true
+  },
+  "sample": {
+    "tenant": "northstar",
+    "roles": [
+      "support"
+    ],
+    "query": "How long is the refund window?",
+    "as_of": "2026-11-11",
+    "max_age_days": 180,
+    "limit": 3,
+    "documents": [
+      {
+        "id": "refund-policy",
+        "tenant": "northstar",
+        "roles": [
+          "support",
+          "finance"
+        ],
+        "version": 1,
+        "updated_at": "2026-08-01",
+        "title": "Refund policy v1",
+        "text": "The refund window is 14 days after purchase."
+      },
+      {
+        "id": "refund-policy",
+        "tenant": "northstar",
+        "roles": [
+          "support",
+          "finance"
+        ],
+        "version": 2,
+        "updated_at": "2026-10-20",
+        "title": "Refund policy v2",
+        "text": "The refund window is 30 days after purchase. Approved refunds return to the original payment method."
+      },
+      {
+        "id": "private-refunds",
+        "tenant": "northstar",
+        "roles": [
+          "finance"
+        ],
+        "version": 1,
+        "updated_at": "2026-10-21",
+        "title": "Private exception budget",
+        "text": "Refund window exceptions have a confidential finance-only budget."
+      },
+      {
+        "id": "refund-policy",
+        "tenant": "harbour",
+        "roles": [
+          "support"
+        ],
+        "version": 1,
+        "updated_at": "2026-10-22",
+        "title": "Harbour refunds",
+        "text": "The refund window is 90 days for Harbour customers."
+      },
+      {
+        "id": "legacy-guide",
+        "tenant": "northstar",
+        "roles": [
+          "support"
+        ],
+        "version": 1,
+        "updated_at": "2025-01-01",
+        "title": "Expired guide",
+        "text": "Refund window: 60 days."
+      }
+    ]
+  },
+  "result": {
+    "summary": "Found 1 fresh, authorized evidence excerpts.",
+    "metrics": {
+      "returned_citations": 1,
+      "query_terms": 3,
+      "abstained": false
+    },
+    "records": [
+      {
+        "citation": "refund-policy@v2",
+        "document_id": "refund-policy",
+        "title": "Refund policy v2",
+        "version": 2,
+        "updated_at": "2026-10-20",
+        "excerpt": "The refund window is 30 days after purchase.",
+        "matched_terms": [
+          "refund",
+          "window"
+        ],
+        "lexical_score": 0.463578
+      }
+    ],
+    "warnings": [
+      "Lexical retrieval only; excerpts are untrusted source text, not instructions or a generated answer.",
+      "Identity and document ACLs are supplied for this local demo. Production must derive both from trusted systems."
+    ],
+    "abstained": false,
+    "answer_mode": "evidence_only",
+    "as_of": "2026-11-11"
+  },
+  "input_sha256": "d74ca2a923e8898b2a4fe7c8d2a58abab99efcde2036ed610af28fbcd93a5f70",
+  "mode": "recorded-fixture-replay",
+  "synthetic_data": true
+}
